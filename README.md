@@ -5,7 +5,7 @@
 
 
 # 🔥 readme
-- 💸 **Follow me***
+- 💸 **Follow me**
 - 🍪 **Get me 35 stars on this repo and i post a true login src**
 
 # extra
