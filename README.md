@@ -5,8 +5,8 @@
 
 
 # 🔥 readme
-- 💸 Follow me 
-- 🍪 Get me 35 stars on this repo and i post a way a true login src
+- 💸 **Follow me***
+- 🍪 **Get me 35 stars on this repo and i post a true login src**
 
 # extra
 - support server / buying server > https://discord.gg/Dt5pN3B2Xj
