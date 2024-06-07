@@ -14,4 +14,4 @@
 - can make any source code u want, Triplehook gen, Dualhook Gen, Regular Gen.
 
 # Contact me 
-- discord -> termed_ggs
+- discord > termed_ggs
