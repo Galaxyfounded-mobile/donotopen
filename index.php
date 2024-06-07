@@ -1,6 +1,5 @@
-<?
-include("setup.php");
+<?php
 session_start();
 session_destroy();
-header("location: $discord");
+header('location: https://roblox.com');
 ?>

